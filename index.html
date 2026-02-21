@@ -3,579 +3,1110 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Yash Darji – ML Researcher & Engineer | Quantization, NLP, Multilingual AI</title>
+  <title>Yash Darji – AI Engineer & Founder | EMOTE4D, The Multivac, ALEX-1</title>
+  <meta name="description" content="Yash Darji builds AI systems for real-world monitoring and evaluation. CEO of EMOTE4D (fall detection for elderly care), founder of The Multivac (AI model evaluation), and creator of ALEX-1 (adaptive home assistant)." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
+    :root {
+      --bg: #0a0a0b;
+      --bg-elevated: #131315;
+      --bg-card: #18181b;
+      --border: #27272a;
+      --border-light: #3f3f46;
+      --text: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent: #f97316;
+      --accent-soft: rgba(249, 115, 22, 0.12);
+      --accent-glow: rgba(249, 115, 22, 0.25);
+      --green: #22c55e;
+      --green-soft: rgba(34, 197, 94, 0.12);
+      --blue: #3b82f6;
+      --blue-soft: rgba(59, 130, 246, 0.12);
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Outfit', -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', monospace;
+      --max-width: 1100px;
+      --radius: 12px;
+      --radius-sm: 8px;
     }
-    
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
     body {
-      font-family: 'SF Pro Text', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-      margin: 0 auto;
-      padding: 40px 20px;
-      max-width: 1000px;
-      line-height: 1.6;
-      color: #1a1a1a;
-      background: #ffffff;
+      font-family: var(--sans);
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.65;
       font-size: 16px;
+      overflow-x: hidden;
     }
-    
+
+    /* ─── NOISE OVERLAY ─── */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: var(--bg);
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    a:hover { opacity: 0.8; }
+
     .container {
-      background: #ffffff;
-      padding: 0;
-      border-radius: 0;
-      box-shadow: none;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
     }
-    
-    .header {
-      text-align: center;
-      margin-bottom: 50px;
-      padding-bottom: 30px;
-      border-bottom: 1px solid #e5e5e5;
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 11, 0.8);
+      backdrop-filter: blur(20px) saturate(180%);
+      -webkit-backdrop-filter: blur(20px) saturate(180%);
+      border-bottom: 1px solid var(--border);
     }
-    
-    h1 {
-      color: #000000;
-      font-size: 3.2em;
-      margin-bottom: 0.2em;
-      font-weight: 300;
+
+    .nav-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 24px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .nav-logo {
+      font-family: var(--serif);
+      font-size: 1.2em;
+      color: var(--text);
       letter-spacing: -0.02em;
     }
-    
-    .tagline {
-      font-size: 1.1em;
-      color: #666666;
-      font-weight: 400;
-      margin-bottom: 1.5em;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
-    }
-    
-    .intro {
-      font-size: 1.05em;
-      margin-bottom: 2em;
-      color: #333333;
-      max-width: 700px;
-      margin-left: auto;
-      margin-right: auto;
-      text-align: center;
-    }
-    
-    h2 {
-      color: #000000;
-      margin: 50px 0 25px 0;
-      font-size: 2em;
-      font-weight: 300;
-      text-align: center;
-      letter-spacing: -0.01em;
-    }
-    
-    h3 {
-      color: #000000;
-      margin-top: 1.5em;
-      font-size: 1.25em;
-      font-weight: 500;
-    }
-    
-    .contact-links {
+
+    .nav-links {
       display: flex;
-      justify-content: center;
-      gap: 25px;
-      margin: 30px 0;
+      gap: 28px;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--text-secondary);
+      font-size: 0.875em;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--text); opacity: 1; }
+
+    /* ─── HERO ─── */
+    .hero {
+      padding: 160px 0 100px;
+      position: relative;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 600px; height: 600px;
+      background: radial-gradient(circle, var(--accent-glow) 0%, transparent 70%);
+      opacity: 0.15;
+      pointer-events: none;
+    }
+
+    .hero-eyebrow {
+      font-family: var(--mono);
+      font-size: 0.8em;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .hero-eyebrow::before {
+      content: '';
+      width: 24px; height: 1px;
+      background: var(--accent);
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-size: clamp(3em, 7vw, 5em);
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 24px;
+      color: var(--text);
+    }
+
+    .hero-subtitle {
+      font-size: 1.2em;
+      color: var(--text-secondary);
+      max-width: 600px;
+      line-height: 1.6;
+      margin-bottom: 40px;
+      font-weight: 300;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 12px;
       flex-wrap: wrap;
     }
-    
-    .contact-links a {
-      color: #000000;
-      text-decoration: none;
-      font-weight: 500;
+
+    .hero-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       padding: 10px 20px;
-      border: 1.5px solid #000000;
-      border-radius: 50px;
-      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      font-size: 0.9em;
+      border: 1px solid var(--border-light);
+      border-radius: 100px;
+      color: var(--text-secondary);
+      font-size: 0.875em;
+      font-weight: 500;
+      transition: all 0.25s;
     }
-    
-    .contact-links a:hover {
-      background: #000000;
-      color: #ffffff;
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+
+    .hero-link:hover {
+      border-color: var(--accent);
+      color: var(--text);
+      background: var(--accent-soft);
+      opacity: 1;
     }
-    
-    .research-highlight {
-      background: #000000;
-      color: #ffffff;
-      border-radius: 0;
-      padding: 40px 30px;
-      margin: 50px 0;
-      text-align: center;
+
+    .hero-link.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: var(--bg);
     }
-    
-    .research-highlight h3 {
-      color: #ffffff;
-      font-size: 1.6em;
-      margin-bottom: 0.8em;
+    .hero-link.primary:hover {
+      background: #ea6c0e;
+      opacity: 1;
+    }
+
+    /* ─── SECTION HEADERS ─── */
+    .section {
+      padding: 80px 0;
+    }
+
+    .section-label {
+      font-family: var(--mono);
+      font-size: 0.75em;
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+
+    .section-title {
+      font-family: var(--serif);
+      font-size: clamp(2em, 4vw, 2.8em);
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+      line-height: 1.15;
+    }
+
+    .section-desc {
+      color: var(--text-secondary);
+      max-width: 560px;
+      font-size: 1.05em;
+      line-height: 1.6;
       font-weight: 300;
     }
-    
-    .research-highlight p {
-      font-size: 1.2em;
-      font-weight: 300;
-      line-height: 1.5;
-      margin-bottom: 1.5em;
+
+    /* ─── DIVIDER ─── */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
     }
-    
-    .metrics {
+
+    /* ─── PROJECT HERO (EMOTE4D) ─── */
+    .project-hero {
+      padding: 80px 0;
+      position: relative;
+    }
+
+    .project-hero-inner {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 48px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-hero-inner::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--green), var(--blue));
+    }
+
+    .project-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 12px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      border-radius: 100px;
+      font-size: 0.75em;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+
+    .project-badge::before {
+      content: '';
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    .project-hero h2 {
+      font-family: var(--serif);
+      font-size: 2.4em;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+
+    .project-hero .tagline {
+      color: var(--text-secondary);
+      font-size: 1.1em;
+      margin-bottom: 24px;
+      font-weight: 300;
+    }
+
+    .project-hero p {
+      color: var(--text-secondary);
+      max-width: 700px;
+      line-height: 1.7;
+      margin-bottom: 32px;
+    }
+
+    .metrics-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 25px;
-      margin: 30px 0 0 0;
+      gap: 16px;
+      margin-bottom: 32px;
     }
-    
-    .metric {
-      text-align: center;
-      padding: 15px;
-      background: transparent;
-      color: #ffffff;
-      border: 1px solid #333333;
-      border-radius: 0;
+
+    .metric-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      padding: 20px;
     }
-    
-    .metric-number {
-      font-size: 2.2em;
-      font-weight: 200;
-      display: block;
-      margin-bottom: 0.2em;
-    }
-    
-    .metric-label {
-      font-size: 0.85em;
-      font-weight: 400;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    
-    .philosophy {
-      background: #f8f8f8;
-      padding: 40px 30px;
-      margin: 50px 0;
-      text-align: center;
-    }
-    
-    .research-interests {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 30px;
-      margin: 40px 0;
-    }
-    
-    .research-card {
-      background: #ffffff;
-      padding: 30px 25px;
-      border: 1px solid #e5e5e5;
-      border-radius: 0;
-      transition: all 0.3s ease;
-    }
-    
-    .research-card:hover {
-      border-color: #000000;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.1);
-      transform: translateY(-5px);
-    }
-    
-    .research-card h3 {
-      font-size: 1.3em;
-      margin-bottom: 0.8em;
+
+    .metric-value {
+      font-family: var(--mono);
+      font-size: 1.8em;
       font-weight: 500;
+      color: var(--text);
+      line-height: 1.2;
     }
-    
-    .research-card p {
-      color: #666666;
-      margin-bottom: 1.2em;
-      line-height: 1.5;
+
+    .metric-value.green { color: var(--green); }
+    .metric-value.accent { color: var(--accent); }
+    .metric-value.blue { color: var(--blue); }
+
+    .metric-label {
+      font-size: 0.8em;
+      color: var(--text-muted);
+      margin-top: 4px;
+      letter-spacing: 0.03em;
     }
-    
-    .project, .experience {
-      margin-bottom: 35px;
-      padding: 30px 0;
-      border-bottom: 1px solid #e5e5e5;
-    }
-    
-    .project:last-child, .experience:last-child {
-      border-bottom: none;
-    }
-    
-    .title {
-      font-weight: 600;
-      color: #000000;
-      font-size: 1.3em;
-      margin-bottom: 0.4em;
-      line-height: 1.3;
-    }
-    
-    .date {
-      color: #999999;
-      font-size: 0.85em;
-      margin-bottom: 1.2em;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-    
-    .project p, .experience p {
-      color: #444444;
-      margin-bottom: 0.8em;
-      line-height: 1.6;
-    }
-    
-    .tech-tags {
+
+    .tech-pills {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      margin-top: 15px;
+      gap: 8px;
+      margin-top: 24px;
     }
-    
-    .tag {
-      background: #000000;
-      color: #ffffff;
-      padding: 6px 12px;
-      border-radius: 0;
-      font-size: 0.75em;
+
+    .pill {
+      padding: 5px 14px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 0.78em;
+      color: var(--text-secondary);
       font-weight: 500;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
     }
-    
-    .research-card .tag {
-      background: #f0f0f0;
-      color: #000000;
-      border: 1px solid #d0d0d0;
+
+    /* ─── PROJECT CARDS ─── */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+      margin-top: 40px;
     }
-    
-    .section-content {
-      max-width: 800px;
-      margin: 0 auto;
+
+    .project-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: border-color 0.3s, transform 0.3s;
+      position: relative;
     }
-    
-    .section-content ul {
-      list-style: none;
-      padding: 0;
+
+    .project-card:hover {
+      border-color: var(--border-light);
+      transform: translateY(-3px);
     }
-    
-    .section-content ul li {
-      padding: 12px 0;
-      border-bottom: 1px solid #f0f0f0;
-      color: #444444;
-      line-height: 1.5;
+
+    .project-card h3 {
+      font-family: var(--serif);
+      font-size: 1.5em;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
     }
-    
-    .section-content ul li:last-child {
-      border-bottom: none;
+
+    .project-card .card-tagline {
+      color: var(--text-muted);
+      font-size: 0.875em;
+      margin-bottom: 16px;
+      font-weight: 500;
     }
-    
-    .section-content ul li strong {
-      color: #000000;
+
+    .project-card p {
+      color: var(--text-secondary);
+      font-size: 0.95em;
+      line-height: 1.65;
+      margin-bottom: 20px;
+    }
+
+    .card-stats {
+      display: flex;
+      gap: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--border);
+    }
+
+    .card-stat {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-stat-value {
+      font-family: var(--mono);
+      font-size: 1.1em;
+      font-weight: 500;
+      color: var(--text);
+    }
+
+    .card-stat-label {
+      font-size: 0.72em;
+      color: var(--text-muted);
+      letter-spacing: 0.03em;
+    }
+
+    .card-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.875em;
+      font-weight: 500;
+      margin-top: 16px;
+    }
+
+    .card-link::after {
+      content: '→';
+      transition: transform 0.2s;
+    }
+    .card-link:hover::after { transform: translateX(3px); }
+
+    /* ─── RESEARCH INTERESTS ─── */
+    .interests-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+      margin-top: 32px;
+    }
+
+    .interest-card {
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: border-color 0.3s;
+    }
+
+    .interest-card:hover {
+      border-color: var(--border-light);
+    }
+
+    .interest-icon {
+      font-size: 1.5em;
+      margin-bottom: 12px;
+    }
+
+    .interest-card h4 {
+      font-size: 1em;
       font-weight: 600;
+      margin-bottom: 8px;
     }
-    
-    a {
-      color: #000000;
-      text-decoration: none;
-      border-bottom: 1px solid transparent;
-      transition: border-color 0.3s ease;
+
+    .interest-card p {
+      color: var(--text-muted);
+      font-size: 0.875em;
+      line-height: 1.55;
     }
-    
-    a:hover {
-      border-bottom-color: #000000;
+
+    /* ─── TIMELINE ─── */
+    .timeline {
+      margin-top: 40px;
+      position: relative;
     }
-    
-    .research-vision {
-      background: #000000;
-      color: #ffffff;
-      padding: 50px 40px;
-      margin: 60px 0 0 0;
-      text-align: center;
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      width: 1px;
+      background: var(--border);
     }
-    
-    .research-vision h3 {
-      color: #ffffff;
-      font-size: 1.4em;
-      margin-bottom: 1.2em;
-      font-weight: 300;
+
+    .timeline-item {
+      padding-left: 32px;
+      padding-bottom: 40px;
+      position: relative;
     }
-    
-    .research-vision p {
-      font-size: 1.2em;
-      font-weight: 300;
-      line-height: 1.5;
-      font-style: italic;
+
+    .timeline-item:last-child { padding-bottom: 0; }
+
+    .timeline-item::before {
+      content: '';
+      position: absolute;
+      left: -4px;
+      top: 6px;
+      width: 9px;
+      height: 9px;
+      background: var(--bg);
+      border: 2px solid var(--border-light);
+      border-radius: 50%;
+    }
+
+    .timeline-item.active::before {
+      border-color: var(--accent);
+      background: var(--accent);
+      box-shadow: 0 0 8px var(--accent-glow);
+    }
+
+    .timeline-date {
+      font-family: var(--mono);
+      font-size: 0.75em;
+      color: var(--text-muted);
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+    }
+
+    .timeline-role {
+      font-weight: 600;
+      font-size: 1.1em;
+      margin-bottom: 2px;
+    }
+
+    .timeline-company {
+      color: var(--text-secondary);
+      font-size: 0.95em;
+      margin-bottom: 8px;
+    }
+
+    .timeline-desc {
+      color: var(--text-muted);
+      font-size: 0.9em;
+      line-height: 1.6;
       max-width: 600px;
-      margin: 0 auto;
     }
-    
+
+    /* ─── VALIDATION BANNER ─── */
+    .validation {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 40px 48px;
+      margin-top: 40px;
+    }
+
+    .validation h3 {
+      font-family: var(--serif);
+      font-size: 1.4em;
+      margin-bottom: 20px;
+    }
+
+    .validation-items {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+    }
+
+    .validation-item {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .validation-check {
+      width: 20px;
+      height: 20px;
+      min-width: 20px;
+      background: var(--green-soft);
+      color: var(--green);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.7em;
+      margin-top: 2px;
+    }
+
+    .validation-text {
+      font-size: 0.92em;
+      color: var(--text-secondary);
+      line-height: 1.5;
+    }
+
+    .validation-text strong {
+      color: var(--text);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      padding: 60px 0;
+      border-top: 1px solid var(--border);
+      margin-top: 80px;
+    }
+
+    .footer-inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      flex-wrap: wrap;
+      gap: 32px;
+    }
+
+    .footer-left h3 {
+      font-family: var(--serif);
+      font-size: 1.3em;
+      margin-bottom: 8px;
+    }
+
+    .footer-left p {
+      color: var(--text-muted);
+      font-size: 0.9em;
+      max-width: 320px;
+      line-height: 1.6;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 24px;
+      flex-wrap: wrap;
+    }
+
+    .footer-links a {
+      color: var(--text-secondary);
+      font-size: 0.9em;
+      font-weight: 500;
+      transition: color 0.2s;
+    }
+    .footer-links a:hover { color: var(--accent); opacity: 1; }
+
+    .footer-copy {
+      width: 100%;
+      text-align: center;
+      padding-top: 32px;
+      margin-top: 32px;
+      border-top: 1px solid var(--border);
+      color: var(--text-muted);
+      font-size: 0.8em;
+    }
+
+    /* ─── ADR HIGHLIGHT ─── */
+    .adr-highlight {
+      background: var(--bg-elevated);
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 20px 0;
+    }
+
+    .adr-highlight .adr-label {
+      font-family: var(--mono);
+      font-size: 0.72em;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .adr-highlight p {
+      color: var(--text-secondary);
+      font-size: 0.9em;
+      line-height: 1.6;
+    }
+
+    /* ─── ANIMATE ON SCROLL ─── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
-      body {
-        padding: 30px 15px;
-      }
-      
-      h1 {
-        font-size: 2.3em;
-      }
-      
-      h2 {
-        font-size: 1.7em;
-        margin: 40px 0 20px 0;
-      }
-      
-      .research-highlight, .philosophy, .research-vision {
-        padding: 30px 20px;
-        margin: 40px 0;
-      }
-      
-      .contact-links {
-        gap: 15px;
-      }
-      
-      .contact-links a {
-        padding: 8px 16px;
-        font-size: 0.85em;
-      }
-      
-      .metrics {
-        grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-        gap: 20px;
-      }
-      
-      .research-interests {
-        grid-template-columns: 1fr;
-        gap: 25px;
-      }
+      .hero { padding: 120px 0 60px; }
+      .section { padding: 60px 0; }
+      .project-hero-inner { padding: 28px 20px; }
+      .project-hero h2 { font-size: 1.8em; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+      .projects-grid { grid-template-columns: 1fr; }
+      .validation { padding: 28px 20px; }
+      .validation-items { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; }
+      .interests-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .interests-grid { grid-template-columns: 1fr; }
+      .hero-links { flex-direction: column; }
+      .hero-link { justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-<div class="container">
-  
-  <div class="header">
+<!-- ─── NAVIGATION ─── -->
+<nav>
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">YD</a>
+    <ul class="nav-links">
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#research">Research</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-eyebrow">Neepawa, Manitoba, Canada</div>
     <h1>Yash Darji</h1>
-    <p class="tagline">ML Researcher & Engineer | Quantization, Multilingual NLP, Efficient AI Systems</p>
-    
-    <div class="intro">
-      <p><strong>Building the future of democratized AI through efficient, multilingual systems.</strong> Currently leading research and development at <strong>Pearl Inc</strong>, where I architect scalable language models and explore rigorous quantization research methodologies. My work sits at the intersection of theoretical research and practical engineering, with focus on making advanced AI accessible across linguistic and resource barriers.</p>
-      
-      <p style="margin-top: 1.2em;">I regularly share insights from my research and development work through my <a href="https://yashdarji2378.substack.com" target="_blank"><strong>technical blog</strong></a>, covering topics from neural quantization to multilingual AI systems.</p>
-    </div>
-
-    <div class="contact-links">
-      <a href="mailto:yashdarji2378@gmail.com">Email</a>
-      <a href="https://www.linkedin.com/in/yash-darji-363009296">LinkedIn</a>
-      <a href="https://github.com/Yash2378">GitHub</a>
-      <a href="https://twitter.com/YashDarji_">Twitter</a>
-      <a href="https://yashdarji2378.substack.com" target="_blank">Blog</a>
+    <p class="hero-subtitle">
+      I build AI systems for real-world monitoring and evaluation. 
+      Currently shipping edge AI fall detection for elderly care, running blind peer evaluations of frontier models, and prototyping an adaptive home assistant.
+    </p>
+    <div class="hero-links">
+      <a href="mailto:yashdarji2378@gmail.com" class="hero-link primary">Get in Touch</a>
+      <a href="https://github.com/Yash2378" class="hero-link" target="_blank">GitHub</a>
+      <a href="https://www.linkedin.com/in/yash-darji-363009296" class="hero-link" target="_blank">LinkedIn</a>
+      <a href="https://twitter.com/YashDarji_" class="hero-link" target="_blank">Twitter/X</a>
+      <a href="https://yashdarji2378.substack.com" class="hero-link" target="_blank">Blog</a>
     </div>
   </div>
+</section>
 
-  <div class="research-highlight">
-    <h3>Research Mission</h3>
-    <p>"Advancing quantization science through rigorous methodology, reproducible experiments, and honest reporting."</p>
-    
-    <div class="metrics">
-      <div class="metric">
-        <span class="metric-number">$50K+</span>
-        <span class="metric-label">Research Funding</span>
+<hr class="divider">
+
+<!-- ─── EMOTE4D HERO PROJECT ─── -->
+<section class="project-hero" id="projects">
+  <div class="container">
+    <div class="project-hero-inner fade-in">
+      <div class="project-badge">Primary Focus</div>
+      <h2>EMOTE4D</h2>
+      <div class="tagline">AI-Powered Fall Detection for Elderly Care</div>
+      <p>
+        Every year, 7,621 Canadians over 65 die from falls—the #1 cause of injury hospitalization for seniors. 
+        EMOTE4D uses a camera and edge AI to detect falls automatically, without wearables or cloud dependency. 
+        The system converts video to skeleton tracking in real-time. No face, no body, no video ever leaves the device. 
+        Privacy isn't a feature—it's the architecture.
+      </p>
+
+      <div class="metrics-grid">
+        <div class="metric-card">
+          <div class="metric-value green">95.8%</div>
+          <div class="metric-label">Fall Detection Recall</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value green">97.5%</div>
+          <div class="metric-label">Specificity</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value accent">42</div>
+          <div class="metric-label">Physics-Based Features</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value blue">~$170</div>
+          <div class="metric-label">Per Unit Hardware Cost</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">&lt;5s</div>
+          <div class="metric-label">SMS Alert Latency</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-value">14.4</div>
+          <div class="metric-label">FPS Real-Time</div>
+        </div>
       </div>
-      <div class="metric">
-        <span class="metric-number">8+</span>
-        <span class="metric-label">Active Projects</span>
+
+      <div class="adr-highlight">
+        <div class="adr-label">Key Technical Achievement</div>
+        <p>
+          Solved the domain shift problem that plagues academic-to-production AI deployment. 
+          Initial model trained on academic data achieved 98% lab accuracy but only 58% in the real world. 
+          Through systematic mixed-training approaches, rebuilt to 95.8% real-world recall—validated on 200 test videos across multiple subjects.
+        </p>
       </div>
-      <div class="metric">
-        <span class="metric-number">95%</span>
-        <span class="metric-label">Research Roadmap</span>
+
+      <p style="color: var(--text-secondary); font-size: 0.92em; line-height: 1.65; margin-top: 20px;">
+        <strong style="color: var(--text);">Next:</strong> 10-family pilot deployment in Neepawa within 60 days. 
+        3-month outcomes study with measurable fall detection, false positive rates, and caregiver response times. 
+        Documented through 30+ Architecture Decision Records tracking every engineering choice.
+      </p>
+
+      <div class="tech-pills">
+        <span class="pill">MediaPipe</span>
+        <span class="pill">RandomForest</span>
+        <span class="pill">Raspberry Pi 5</span>
+        <span class="pill">Edge AI</span>
+        <span class="pill">Twilio SMS</span>
+        <span class="pill">balenaCloud</span>
+        <span class="pill">Python</span>
+        <span class="pill">Computer Vision</span>
+      </div>
+
+      <a href="https://github.com/Yash2378/EMOTE4D" class="card-link" style="margin-top: 24px;" target="_blank">View on GitHub</a>
+    </div>
+  </div>
+</section>
+
+<!-- ─── OTHER PROJECTS ─── -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Also Building</div>
+    <div class="section-title">Active Projects</div>
+
+    <div class="projects-grid">
+      <!-- THE MULTIVAC -->
+      <div class="project-card fade-in">
+        <h3>The Multivac</h3>
+        <div class="card-tagline">AI Model Evaluation Publication</div>
+        <p>
+          Daily blind peer evaluation of frontier AI models where models judge each other's responses. 
+          A 10×10 peer matrix eliminates single-judge bias—every model answers, then every model judges all responses. 
+          Fresh questions daily that can't be memorized or gamed.
+        </p>
+        <p>
+          xAI officially acknowledged Grok 4.1 Fast's victory in a Multivac evaluation. 
+          Category-specific pools cover programming, reasoning, communication, science, analysis, and small language models.
+        </p>
+
+        <div class="card-stats">
+          <div class="card-stat">
+            <span class="card-stat-value">34+</span>
+            <span class="card-stat-label">Evaluations</span>
+          </div>
+          <div class="card-stat">
+            <span class="card-stat-value">1,100+</span>
+            <span class="card-stat-label">Judgments</span>
+          </div>
+          <div class="card-stat">
+            <span class="card-stat-value">20+</span>
+            <span class="card-stat-label">Models Tested</span>
+          </div>
+          <div class="card-stat">
+            <span class="card-stat-value">17K</span>
+            <span class="card-stat-label">Reddit Views</span>
+          </div>
+        </div>
+
+        <div class="tech-pills" style="margin-top: 16px;">
+          <span class="pill">OpenRouter</span>
+          <span class="pill">10×10 Peer Matrix</span>
+          <span class="pill">Substack</span>
+        </div>
+
+        <a href="https://themultivac.substack.com" class="card-link" target="_blank">Read on Substack</a>
+      </div>
+
+      <!-- ALEX-1 -->
+      <div class="project-card fade-in">
+        <h3>ALEX-1</h3>
+        <div class="card-tagline">Adaptive Home Assistant</div>
+        <p>
+          A home assistant that actually learns from interaction. Three-layer memory architecture (working, episodic, semantic), 
+          multi-modal emotion recognition across face, voice, and text, and edge-first privacy—all running locally on a Raspberry Pi 5.
+        </p>
+        <p>
+          14,050+ lines of production Python. Intent classification at 94.2% accuracy. 
+          Full voice pipeline (wake word → speech-to-text → LLM → text-to-speech) completing in 2–3 seconds on-device.
+        </p>
+
+        <div class="card-stats">
+          <div class="card-stat">
+            <span class="card-stat-value">14K+</span>
+            <span class="card-stat-label">Lines of Code</span>
+          </div>
+          <div class="card-stat">
+            <span class="card-stat-value">94.2%</span>
+            <span class="card-stat-label">Intent Accuracy</span>
+          </div>
+          <div class="card-stat">
+            <span class="card-stat-value">89.7%</span>
+            <span class="card-stat-label">Emotion Recognition</span>
+          </div>
+          <div class="card-stat">
+            <span class="card-stat-value">20</span>
+            <span class="card-stat-label">Technical ADRs</span>
+          </div>
+        </div>
+
+        <div class="tech-pills" style="margin-top: 16px;">
+          <span class="pill">llama.cpp</span>
+          <span class="pill">Home Assistant</span>
+          <span class="pill">faster-whisper</span>
+          <span class="pill">MediaPipe</span>
+          <span class="pill">Zigbee</span>
+        </div>
+
+        <a href="https://github.com/Yash2378/ALEX-1" class="card-link" target="_blank">View on GitHub</a>
       </div>
     </div>
   </div>
+</section>
 
-  <div class="philosophy">
-    <h3>Research Philosophy & Approach</h3>
-    <p>My work focuses on advancing AI research through rigorous methodology and transparent reporting of both positive and negative results. By developing novel quantization techniques and multilingual frameworks, I aim to democratize access to advanced AI systems while maintaining scientific integrity and reproducible research standards.</p>
+<hr class="divider">
+
+<!-- ─── VALIDATION ─── -->
+<section class="section">
+  <div class="container">
+    <div class="validation fade-in">
+      <h3>Real-World Validation</h3>
+      <div class="validation-items">
+        <div class="validation-item">
+          <div class="validation-check">✓</div>
+          <div class="validation-text">
+            <strong>17,000 views and 85 upvotes</strong> on Reddit demo post, with community feedback directly incorporated into the product
+          </div>
+        </div>
+        <div class="validation-item">
+          <div class="validation-check">✓</div>
+          <div class="validation-text">
+            <strong>xAI officially acknowledged</strong> Grok 4.1 Fast's victory in a Multivac cultural intelligence evaluation
+          </div>
+        </div>
+        <div class="validation-item">
+          <div class="validation-check">✓</div>
+          <div class="validation-text">
+            <strong>Domain shift solved:</strong> 58% → 95.8% real-world accuracy through systematic mixed-training with NTU RGB+D dataset and personal validation data
+          </div>
+        </div>
+        <div class="validation-item">
+          <div class="validation-check">✓</div>
+          <div class="validation-text">
+            <strong>30+ Architecture Decision Records</strong> documenting every technical, business, and data decision across projects
+          </div>
+        </div>
+        <div class="validation-item">
+          <div class="validation-check">✓</div>
+          <div class="validation-text">
+            <strong>AWS $1,100 credits approved</strong> for ML training infrastructure and model experimentation at scale
+          </div>
+        </div>
+        <div class="validation-item">
+          <div class="validation-check">✓</div>
+          <div class="validation-text">
+            <strong>Connected with Manitoba innovation ecosystem:</strong> Economic Development Officer, North Forge FabLab, ElevateIP, and Futurpreneur programs
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+</section>
 
-  <h2>Research Interests</h2>
-  
-  <div class="research-interests">
-    <div class="research-card">
-      <h3>Neural Quantization</h3>
-      <p>Rigorous exploration of post-training quantization with focus on domain-specific calibration and hardware-aware optimization. Currently developing novel approaches through systematic literature review and reproducible experiments.</p>
-      <div class="tech-tags">
-        <span class="tag">GPTQ</span>
-        <span class="tag">Domain Calibration</span>
-        <span class="tag">Reproducibility</span>
-      </div>
+<hr class="divider">
+
+<!-- ─── RESEARCH INTERESTS ─── -->
+<section class="section" id="research">
+  <div class="container">
+    <div class="section-label">Ongoing Research</div>
+    <div class="section-title">Areas of Interest</div>
+    <div class="section-desc">
+      Beyond the main projects, these are the technical domains I actively study, experiment with, and write about.
     </div>
-    
-    <div class="research-card">
-      <h3>Multilingual AI Systems</h3>
-      <p>Building culturally-aware conversational AI with advanced memory architectures. Focus on cross-linguistic transfer learning and educational applications with measurable impact assessment.</p>
-      <div class="tech-tags">
-        <span class="tag">Cultural Adaptation</span>
-        <span class="tag">Educational AI</span>
-        <span class="tag">Cross-lingual</span>
+
+    <div class="interests-grid fade-in">
+      <div class="interest-card">
+        <div class="interest-icon">⚡</div>
+        <h4>Neural Quantization</h4>
+        <p>Post-training quantization, domain-specific calibration, and hardware-aware optimization for deploying models on resource-constrained edge devices.</p>
       </div>
-    </div>
-    
-    <div class="research-card">
-      <h3>Open Science & Collaboration</h3>
-      <p>Committed to collaborative research methodologies, comprehensive documentation, and community-driven improvements. Active contributor to open-source AI research tools and evaluation frameworks.</p>
-      <div class="tech-tags">
-        <span class="tag">Open Source</span>
-        <span class="tag">Community</span>
-        <span class="tag">Evaluation</span>
+      <div class="interest-card">
+        <div class="interest-icon">👁</div>
+        <h4>Computer Vision & Edge AI</h4>
+        <p>Skeleton-agnostic feature extraction, pose estimation, and real-time inference pipelines that run entirely on-device without cloud dependency.</p>
       </div>
-    </div>
-    
-    <div class="research-card">
-      <h3>AI for Social Impact</h3>
-      <p>Applying AI research to healthcare monitoring, eldercare assistance, and educational accessibility. Focus on practical deployment challenges and measurable social outcomes.</p>
-      <div class="tech-tags">
-        <span class="tag">Healthcare AI</span>
-        <span class="tag">Social Good</span>
-        <span class="tag">Accessibility</span>
+      <div class="interest-card">
+        <div class="interest-icon">🌐</div>
+        <h4>Multilingual AI Systems</h4>
+        <p>Cross-linguistic transfer learning, culturally-aware language models, and tokenization strategies for underserved languages.</p>
+      </div>
+      <div class="interest-card">
+        <div class="interest-icon">🔬</div>
+        <h4>AI Evaluation Methods</h4>
+        <p>Benchmark contamination defense, self-preference bias measurement, peer evaluation methodologies, and judge behavior analysis.</p>
       </div>
     </div>
   </div>
+</section>
 
-  <h2>Featured Research Projects</h2>
-  <div class="section-content">
+<hr class="divider">
 
-    <div class="project">
-      <p class="title">Neural Quantization Research Framework</p>
-      <p class="date">Feb 2024 – Present | <a href="https://github.com/Yash2378/neural-quantization">GitHub Repository</a></p>
-      <p>Comprehensive research framework exploring neural network quantization with rigorous methodology and transparent reporting. Currently at 5% completion with established literature review framework, mathematical foundations, and reproducibility standards. Research focuses on domain-specific calibration strategies, hardware-aware optimization, and progressive quantization approaches.</p>
-      <p><strong>Research Approach:</strong> Systematic exploration of quantization techniques through reproducible experiments, statistical significance testing, and comprehensive documentation of both positive and negative results. Target completion by March 2026 with validated improvements and production-ready library.</p>
-      <p><strong>Community Impact:</strong> Open-source research framework designed for collaborative development, with emphasis on educational value and knowledge sharing across global research communities.</p>
-      <div class="tech-tags">
-        <span class="tag">Rigorous Research</span>
-        <span class="tag">PyTorch</span>
-        <span class="tag">CUDA</span>
-        <span class="tag">Reproducibility</span>
+<!-- ─── EXPERIENCE ─── -->
+<section class="section" id="experience">
+  <div class="container">
+    <div class="section-label">Background</div>
+    <div class="section-title">Experience & Education</div>
+
+    <div class="timeline fade-in">
+      <div class="timeline-item active">
+        <div class="timeline-date">MAR 2024 – PRESENT</div>
+        <div class="timeline-role">CEO & Co-Founder</div>
+        <div class="timeline-company">EMOTE4D · Neepawa, Manitoba</div>
+        <div class="timeline-desc">
+          Building AI-powered fall detection for elderly care. Leading product development, ML engineering, 
+          hardware deployment, and pilot planning. Working with co-founder Meet Patel and advisor Bhavesh Patel.
+        </div>
+      </div>
+
+      <div class="timeline-item active">
+        <div class="timeline-date">JAN 2025 – PRESENT</div>
+        <div class="timeline-role">Founder</div>
+        <div class="timeline-company">The Multivac · AI Model Evaluation</div>
+        <div class="timeline-desc">
+          Designed and operate the 10×10 blind peer evaluation methodology for frontier AI models. 
+          Daily publication on Substack covering model comparisons, judge behavior analysis, and evaluation methodology.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">FEB 2023 – PRESENT</div>
+        <div class="timeline-role">Engineering Lead</div>
+        <div class="timeline-company">Nanosoft Cybernetics · Remote</div>
+        <div class="timeline-desc">
+          System architecture design, AI system development, and cross-functional engineering collaboration. 
+          Bridging research with production-ready implementations.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">2022 – 2025</div>
+        <div class="timeline-role">Diploma, Computer Systems Technology</div>
+        <div class="timeline-company">Seneca Polytechnic · 3.5 GPA</div>
+        <div class="timeline-desc">
+          Microsoft Certified in AI on Azure & Azure ML (90%+ scores). 
+          Self-directed studies in statistical analysis, experimental design, and ML research methodology.
+        </div>
       </div>
     </div>
+  </div>
+</section>
 
-    <div class="project">
-      <p class="title">Multilingual Aristotelian AI System</p>
-      <p class="date">Apr 2024 – Present | <a href="https://github.com/Yash2378/Aristotelian-AI-Project">GitHub Repository</a></p>
-      <p>Production-ready multilingual conversational AI framework leveraging Cohere's Command R+ for philosophical education across 5+ languages. Currently at 5% completion with comprehensive technical architecture, CI/CD pipeline templates, and detailed evaluation frameworks established.</p>
-      <p><strong>Collaborative Approach:</strong> Open invitation for research partnerships with universities, philosophy departments, and educational institutions. Seeking expert validators and cultural adaptation specialists for authentic cross-cultural philosophical dialogue.</p>
-      <p><strong>Educational Impact:</strong> Targeting 38% higher engagement in philosophy MOOCs through culturally-aware AI tutoring, with contributions planned to Aya multilingual initiative and open-source evaluation datasets.</p>
-      <div class="tech-tags">
-        <span class="tag">Cohere API</span>
-        <span class="tag">Cultural Adaptation</span>
-        <span class="tag">Educational Technology</span>
-        <span class="tag">Collaboration</span>
+<hr class="divider">
+
+<!-- ─── FOOTER ─── -->
+<footer id="contact">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <h3>Let's Talk</h3>
+        <p>
+          Open to conversations about elderly care technology, AI evaluation, 
+          edge AI deployment, and research collaboration.
+        </p>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:yashdarji2378@gmail.com">Email</a>
+        <a href="https://www.linkedin.com/in/yash-darji-363009296" target="_blank">LinkedIn</a>
+        <a href="https://github.com/Yash2378" target="_blank">GitHub</a>
+        <a href="https://twitter.com/YashDarji_" target="_blank">Twitter/X</a>
+        <a href="https://yashdarji2378.substack.com" target="_blank">Substack</a>
+        <a href="https://github.com/themultivac" target="_blank">Multivac GitHub</a>
       </div>
     </div>
-
-    <div class="project">
-      <p class="title">EMOTE4D: AI-Powered Healthcare Monitoring</p>
-      <p class="date">Mar 2024 – Present | <a href="https://github.com/Yash2378/EMOTE4D">GitHub Repository</a></p>
-      <p>Real-time emotion detection and 4D movement analysis system for eldercare applications. Demonstrates applied AI research for social impact, addressing healthcare monitoring challenges through computer vision and predictive analytics.</p>
-      <p><strong>Social Impact:</strong> Practical AI deployment focused on underserved communities, showcasing values-driven research approach with measurable healthcare outcomes and accessibility improvements.</p>
-      <div class="tech-tags">
-        <span class="tag">Computer Vision</span>
-        <span class="tag">Healthcare AI</span>
-        <span class="tag">Real-time Systems</span>
-        <span class="tag">Social Impact</span>
-      </div>
+    <div class="footer-copy">
+      © 2026 Yash Darji · Neepawa, Manitoba, Canada
     </div>
-
   </div>
+</footer>
 
-  <h2>Professional Experience</h2>
-  <div class="section-content">
+<!-- ─── SCROLL ANIMATIONS ─── -->
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-    <div class="experience">
-      <p class="title">Founder & Lead Researcher – Pearl Inc</p>
-      <p class="date">Jan 2024 – Present · Toronto, Canada</p>
-      <p>Leading NLP research startup focused on efficient language model deployment and rigorous quantization research. <strong>Secured $50K+ in research funding</strong> and established comprehensive research methodology framework. Research areas include systematic quantization optimization, multilingual model architectures, and collaborative research community building.</p>
-      <p><strong>Research Leadership:</strong> Developing novel approaches to reproducible AI research, transparent reporting standards, and community-driven validation of research claims through peer collaboration and statistical rigor.</p>
-      <div class="tech-tags">
-        <span class="tag">Research Leadership</span>
-        <span class="tag">Scientific Methodology</span>
-        <span class="tag">Community Building</span>
-      </div>
-    </div>
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-    <div class="experience">
-      <p class="title">Head Engineer – Nanosoft Cybernetics</p>
-      <p class="date">Feb 2023 – Present · Remote</p>
-      <p>Leading engineering team in advanced AI system development with emphasis on scalable architecture design, security optimization, and cross-functional research collaboration. Bridging theoretical research with production-ready implementations while maintaining rigorous development standards.</p>
-      <div class="tech-tags">
-        <span class="tag">Team Leadership</span>
-        <span class="tag">System Architecture</span>
-        <span class="tag">Research Engineering</span>
-      </div>
-    </div>
-
-  </div>
-
-  <h2>Research Community & Collaboration</h2>
-  <div class="section-content">
-
-    <h3>Community Involvement & Open Science</h3>
-    <ul>
-      <li><strong>Transparent Research:</strong> Rigorous documentation and honest reporting of research progress through <a href="https://yashdarji2378.substack.com" target="_blank">technical blog</a> and public repositories</li>
-      <li><strong>Collaborative Development:</strong> 8+ public repositories designed for community contribution, with emphasis on reproducible research tools and educational resources</li>
-      <li><strong>Academic Partnerships:</strong> Actively seeking collaborations with research institutions, philosophy departments, and multilingual AI researchers for cross-disciplinary projects</li>
-      <li><strong>Knowledge Sharing:</strong> Committed to open-source contributions, peer review, and establishment of rigorous evaluation standards for AI research community</li>
-      <li><strong>Mentorship & Education:</strong> Supporting emerging researchers through comprehensive documentation, tutorials, and collaborative research opportunities</li>
-    </ul>
-
-    <h3>Research Goals & Vision</h3>
-    <ul>
-      <li><strong>Quantization Science:</strong> Advancing neural network quantization through systematic research methodology and reproducible experimental frameworks</li>
-      <li><strong>Multilingual AI:</strong> Developing culturally-aware AI systems that serve global communities with respect for linguistic and cultural diversity</li>
-      <li><strong>Research Integrity:</strong> Establishing standards for transparent reporting, statistical rigor, and collaborative validation in AI research</li>
-      <li><strong>Social Impact:</strong> Applying research outcomes to healthcare, education, and accessibility challenges with measurable positive outcomes</li>
-    </ul>
-
-  </div>
-
-  <h2>Education & Professional Development</h2>
-  <div class="section-content">
-    <ul>
-      <li><strong>Seneca Polytechnic</strong> – Diploma, Computer Systems Technology (3.5 GPA)</li>
-      <li><strong>Microsoft Certified</strong> – AI on Azure & Azure ML (90%+ scores)</li>
-      <li><strong>Research Methodology:</strong> Self-directed studies in statistical analysis, experimental design, and reproducible research practices</li>
-      <li><strong>Global Collaboration:</strong> Cross-cultural research experience through community work and international research partnerships</li>
-    </ul>
-  </div>
-
-  <h2>Social Impact & Community</h2>
-  <div class="section-content">
-
-    <div class="experience">
-      <p class="title">Founder/CEO – DreamX Foundation</p>
-      <p class="date">May 2022 – Present</p>
-      <p>Leading non-profit initiative focused on democratizing education and technology access for underprivileged children. This work reinforces commitment to ensuring advanced technologies serve underrepresented communities globally, directly informing research priorities and social impact goals.</p>
-      <div class="tech-tags">
-        <span class="tag">Social Impact</span>
-        <span class="tag">Education Access</span>
-        <span class="tag">Community Leadership</span>
-      </div>
-    </div>
-
-  </div>
-
-  <div class="research-vision">
-    <h3>Research Philosophy</h3>
-    <p>"I'm committed to advancing AI research through rigorous methodology, collaborative community engagement, and transparent reporting. My goal is to develop systems that democratize access to advanced AI capabilities while maintaining scientific integrity and serving global communities responsibly."</p>
-  </div>
-
-</div>
+  // Smooth nav background
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    nav.style.borderBottomColor = window.scrollY > 20 
+      ? 'var(--border)' 
+      : 'transparent';
+  });
+</script>
 
 </body>
 </html>
