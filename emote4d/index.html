@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>EMOTE4D — AI-Powered Fall Detection for Elderly Care</title>
+  <meta name="description" content="EMOTE4D uses edge AI and computer vision to detect falls in real-time without wearables or cloud dependency. 95.8% recall, 97.5% specificity, privacy by architecture." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0b;
+      --bg-elevated: #131315;
+      --bg-card: #18181b;
+      --border: #27272a;
+      --border-light: #3f3f46;
+      --text: #fafafa;
+      --text-secondary: #a1a1aa;
+      --text-muted: #71717a;
+      --accent: #f97316;
+      --accent-soft: rgba(249, 115, 22, 0.12);
+      --accent-glow: rgba(249, 115, 22, 0.25);
+      --green: #22c55e;
+      --green-soft: rgba(34, 197, 94, 0.12);
+      --blue: #3b82f6;
+      --blue-soft: rgba(59, 130, 246, 0.12);
+      --red: #ef4444;
+      --red-soft: rgba(239, 68, 68, 0.10);
+      --serif: 'DM Serif Display', Georgia, serif;
+      --sans: 'Outfit', -apple-system, sans-serif;
+      --mono: 'JetBrains Mono', 'SF Mono', monospace;
+      --max-width: 1100px;
+      --radius: 12px;
+      --radius-sm: 8px;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; -webkit-font-smoothing: antialiased; }
+    body { font-family: var(--sans); background: var(--bg); color: var(--text); line-height: 1.65; font-size: 16px; overflow-x: hidden; }
+
+    body::before {
+      content: '';
+      position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none; z-index: 9999;
+    }
+
+    ::selection { background: var(--accent); color: var(--bg); }
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
+    a:hover { opacity: 0.8; }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
+
+    /* ─── NAV ─── */
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(10, 10, 11, 0.8); backdrop-filter: blur(20px) saturate(180%); border-bottom: 1px solid var(--border); }
+    .nav-inner { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; height: 60px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: var(--serif); font-size: 1.2em; color: var(--text); letter-spacing: -0.02em; }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
+    .nav-links a { color: var(--text-secondary); font-size: 0.875em; font-weight: 500; letter-spacing: 0.02em; transition: color 0.2s; }
+    .nav-links a:hover { color: var(--text); opacity: 1; }
+
+    .breadcrumb { font-family: var(--mono); font-size: 0.78em; color: var(--text-muted); margin-bottom: 16px; }
+    .breadcrumb a { color: var(--text-muted); }
+    .breadcrumb a:hover { color: var(--accent); }
+
+    /* ─── HERO ─── */
+    .hero { padding: 140px 0 80px; position: relative; }
+    .hero::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 700px; height: 500px; background: radial-gradient(ellipse, var(--accent-glow) 0%, transparent 70%); opacity: 0.12; pointer-events: none; }
+
+    .hero h1 { font-family: var(--serif); font-size: clamp(2.8em, 6vw, 4.5em); line-height: 1.05; letter-spacing: -0.03em; margin-bottom: 12px; }
+    .hero .tagline { font-size: 1.25em; color: var(--text-secondary); font-weight: 300; margin-bottom: 28px; }
+    .hero .hero-desc { font-size: 1.05em; color: var(--text-secondary); max-width: 680px; line-height: 1.7; margin-bottom: 36px; font-weight: 300; }
+
+    .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
+    .hero-link { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border: 1px solid var(--border-light); border-radius: 100px; color: var(--text-secondary); font-size: 0.875em; font-weight: 500; transition: all 0.25s; }
+    .hero-link:hover { border-color: var(--accent); color: var(--text); background: var(--accent-soft); opacity: 1; }
+    .hero-link.primary { background: var(--accent); border-color: var(--accent); color: var(--bg); }
+    .hero-link.primary:hover { background: #ea6c0e; opacity: 1; }
+
+    /* ─── SECTIONS ─── */
+    .section { padding: 80px 0; }
+    .section-label { font-family: var(--mono); font-size: 0.75em; color: var(--accent); letter-spacing: 0.12em; text-transform: uppercase; margin-bottom: 12px; }
+    .section-title { font-family: var(--serif); font-size: clamp(2em, 4vw, 2.8em); letter-spacing: -0.02em; margin-bottom: 16px; line-height: 1.15; }
+    .section-desc { color: var(--text-secondary); max-width: 600px; font-size: 1.05em; line-height: 1.6; font-weight: 300; }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
+
+    /* ─── METRICS ─── */
+    .metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 16px; margin-top: 32px; }
+    .metric-card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 24px; }
+    .metric-value { font-family: var(--mono); font-size: 2em; font-weight: 500; color: var(--text); line-height: 1.2; }
+    .metric-value.green { color: var(--green); }
+    .metric-value.accent { color: var(--accent); }
+    .metric-value.blue { color: var(--blue); }
+    .metric-label { font-size: 0.8em; color: var(--text-muted); margin-top: 6px; letter-spacing: 0.03em; }
+
+    /* ─── TECH PILLS ─── */
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+    .pill { padding: 5px 14px; background: var(--bg-elevated); border: 1px solid var(--border); border-radius: 100px; font-size: 0.78em; color: var(--text-secondary); font-weight: 500; }
+
+    /* ─── ADR HIGHLIGHT ─── */
+    .adr-highlight { background: var(--bg-elevated); border-left: 3px solid var(--accent); padding: 20px 24px; border-radius: 0 var(--radius-sm) var(--radius-sm) 0; margin: 24px 0; }
+    .adr-highlight .adr-label { font-family: var(--mono); font-size: 0.72em; color: var(--accent); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 6px; }
+    .adr-highlight p { color: var(--text-secondary); font-size: 0.9em; line-height: 1.6; }
+
+    /* ─── CARD GRID ─── */
+    .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 32px; }
+    .card { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; transition: border-color 0.3s; }
+    .card:hover { border-color: var(--border-light); }
+    .card h3 { font-family: var(--serif); font-size: 1.3em; margin-bottom: 12px; }
+    .card p { color: var(--text-secondary); font-size: 0.92em; line-height: 1.65; }
+
+    /* ─── TIMELINE ─── */
+    .timeline { margin-top: 40px; position: relative; }
+    .timeline::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 1px; background: var(--border); }
+    .timeline-item { padding-left: 32px; padding-bottom: 40px; position: relative; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; left: -4px; top: 6px; width: 9px; height: 9px; background: var(--bg); border: 2px solid var(--border-light); border-radius: 50%; }
+    .timeline-item.active::before { border-color: var(--accent); background: var(--accent); box-shadow: 0 0 8px var(--accent-glow); }
+    .timeline-date { font-family: var(--mono); font-size: 0.75em; color: var(--text-muted); letter-spacing: 0.05em; margin-bottom: 4px; }
+    .timeline-title { font-weight: 600; font-size: 1.1em; margin-bottom: 6px; }
+    .timeline-desc { color: var(--text-muted); font-size: 0.9em; line-height: 1.6; max-width: 600px; }
+
+    /* ─── ARCHITECTURE ─── */
+    .arch-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius); padding: 32px; margin-top: 32px; }
+    .arch-box pre { font-family: var(--mono); font-size: 0.8em; color: var(--text-secondary); line-height: 1.7; overflow-x: auto; }
+
+    /* ─── FOOTER ─── */
+    footer { padding: 60px 0; border-top: 1px solid var(--border); margin-top: 80px; }
+    .footer-inner { display: flex; justify-content: space-between; align-items: flex-start; flex-wrap: wrap; gap: 32px; }
+    .footer-left h3 { font-family: var(--serif); font-size: 1.3em; margin-bottom: 8px; }
+    .footer-left p { color: var(--text-muted); font-size: 0.9em; max-width: 320px; line-height: 1.6; }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { color: var(--text-secondary); font-size: 0.9em; font-weight: 500; transition: color 0.2s; }
+    .footer-links a:hover { color: var(--accent); opacity: 1; }
+    .footer-copy { width: 100%; text-align: center; padding-top: 32px; margin-top: 32px; border-top: 1px solid var(--border); color: var(--text-muted); font-size: 0.8em; }
+
+    .fade-in { opacity: 0; transform: translateY(20px); transition: opacity 0.6s ease, transform 0.6s ease; }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 768px) {
+      .hero { padding: 120px 0 60px; }
+      .section { padding: 60px 0; }
+      .metrics-grid { grid-template-columns: repeat(2, 1fr); }
+      .nav-links { display: none; }
+      .card-grid { grid-template-columns: 1fr; }
+      .footer-inner { flex-direction: column; }
+    }
+    @media (max-width: 480px) {
+      .metrics-grid { grid-template-columns: 1fr; }
+      .hero-links { flex-direction: column; }
+      .hero-link { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">YD</a>
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="#timeline">Timeline</a></li>
+      <li><a href="#architecture">Architecture</a></li>
+      <li><a href="#next">What's Next</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="container">
+    <div class="breadcrumb"><a href="index.html">Yash Darji</a> / EMOTE4D</div>
+    <h1>EMOTE4D</h1>
+    <div class="tagline">AI-Powered Fall Detection for Elderly Care</div>
+    <p class="hero-desc">
+      Every year, 7,621 Canadians over 65 die from falls—the #1 cause of injury hospitalization for seniors. 
+      EMOTE4D uses a camera and edge AI to detect falls automatically, without wearables or cloud dependency. 
+      The system converts video to skeleton tracking in real-time. No face, no body, no video ever leaves the device. 
+      Privacy isn't a feature—it's the architecture.
+    </p>
+    <div class="hero-links">
+      <a href="https://github.com/Yash2378/EMOTE4D" class="hero-link primary" target="_blank">View on GitHub</a>
+      <a href="index.html" class="hero-link">← Back to Portfolio</a>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── KEY METRICS ─── -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Performance</div>
+    <div class="section-title">Key Metrics</div>
+    <div class="section-desc">
+      Validated on 200 test videos across multiple subjects in real-world home environments—not lab conditions.
+    </div>
+
+    <div class="metrics-grid fade-in">
+      <div class="metric-card">
+        <div class="metric-value green">95.8%</div>
+        <div class="metric-label">Fall Detection Recall</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value green">97.5%</div>
+        <div class="metric-label">Specificity</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value accent">42</div>
+        <div class="metric-label">Physics-Based Features</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value blue">~$170</div>
+        <div class="metric-label">Per Unit Hardware Cost</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">&lt;5s</div>
+        <div class="metric-label">SMS Alert Latency</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value">14.4</div>
+        <div class="metric-label">FPS Real-Time</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value green">9</div>
+        <div class="metric-label">Posture States</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-value accent">30+</div>
+        <div class="metric-label">ADRs Documented</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── DOMAIN SHIFT ─── -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Core Breakthrough</div>
+    <div class="section-title">Solving Domain Shift</div>
+    <div class="section-desc">
+      The gap between lab accuracy and real-world performance is where most AI systems die. We crossed it.
+    </div>
+
+    <div class="adr-highlight" style="margin-top: 32px;">
+      <div class="adr-label">The Problem</div>
+      <p>
+        Model trained purely on the NTU RGB+D academic dataset achieved 98% accuracy in controlled conditions. 
+        Deployed in a real living room? <strong style="color: var(--red);">58% accuracy.</strong> 
+        Different camera angles, lighting, furniture occlusion, clothing variance, and natural movement patterns 
+        destroyed performance. This is the domain shift problem—and it kills most academic CV projects before they ship.
+      </p>
+    </div>
+
+    <div class="adr-highlight">
+      <div class="adr-label">The Solution</div>
+      <p>
+        Mixed training combining NTU RGB+D dataset with personal validation samples recorded in actual home environments. 
+        42 physics-based features extracted from MediaPipe skeleton data—velocity vectors, center-of-mass trajectories, 
+        joint angle derivatives, torso inclination rates. A 9-state posture machine tracks transitions 
+        (standing → stumbling → falling → lying) rather than classifying individual frames. 
+        Result: <strong style="color: var(--green);">95.8% recall, 97.5% specificity</strong> in real-world conditions.
+      </p>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── DEVELOPMENT TIMELINE ─── -->
+<section class="section" id="timeline">
+  <div class="container">
+    <div class="section-label">Journey</div>
+    <div class="section-title">Development Timeline</div>
+
+    <div class="timeline fade-in">
+      <div class="timeline-item">
+        <div class="timeline-date">JUN – JUL 2024</div>
+        <div class="timeline-title">Research & Exploration Phase</div>
+        <div class="timeline-desc">
+          Founded EMOTE4D with co-founder Meet Patel. Experimented broadly across emotion detection, 
+          computer vision architectures, and 3D/4D Gaussian Splatting for dynamic scene reconstruction. 
+          Explored how real-time human activity understanding could serve elderly care. 
+          Identified fall detection as the highest-impact, most tractable problem to solve first.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">AUG 2024</div>
+        <div class="timeline-title">Hardware Acquisition</div>
+        <div class="timeline-desc">
+          Ordered webcam and began assembling the hardware stack. Evaluated camera options for resolution, 
+          frame rate, and field-of-view trade-offs needed for reliable skeleton tracking in home environments.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">SEP 2024</div>
+        <div class="timeline-title">First Working Prototype</div>
+        <div class="timeline-desc">
+          Built <code style="font-family: var(--mono); color: var(--accent);">5_nano_fall_detector.py</code>—the 
+          first end-to-end working prototype with a 5-second confirmation window before triggering a Twilio SMS alert. 
+          MediaPipe pose estimation feeding into a RandomForest classifier with physics-based features. 
+          Proved the core concept: skeleton-only detection works without storing any video or facial data.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">OCT 2025</div>
+        <div class="timeline-title">Reddit Demo & Community Validation</div>
+        <div class="timeline-desc">
+          Posted the <code style="font-family: var(--mono); color: var(--accent);">5_second_timer_fall_detector</code> 
+          demo on Reddit. Received 17,000 views, 85 upvotes, and ~25 comments with technical feedback. 
+          Took down the post shortly after due to plans to patent key features. 
+          Community feedback directly informed architecture decisions around threshold optimization 
+          and cross-person validation testing.
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">NOV 2025</div>
+        <div class="timeline-title">Community Connections</div>
+        <div class="timeline-desc">
+          Met Marilyn Crewe, Economic Development Officer for the Neepawa area. 
+          Established connections with Manitoba's innovation ecosystem including North Forge FabLab, 
+          ElevateIP, and Futurpreneur funding programs. Onboarded advisor Bhavesh Patel (10% equity).
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-date">DEC 2025</div>
+        <div class="timeline-title">Pilot Planning</div>
+        <div class="timeline-desc">
+          Pitched the 10-family pilot deployment plan for Neepawa. Defined the 3-month outcomes study 
+          framework: measurable fall detection rates, false positive tracking, caregiver response time metrics, 
+          and user satisfaction surveys. Secured AWS $1,100 credits for ML training infrastructure.
+        </div>
+      </div>
+
+      <div class="timeline-item active">
+        <div class="timeline-date">JAN – FEB 2026</div>
+        <div class="timeline-title">Production Readiness</div>
+        <div class="timeline-desc">
+          Solving domain shift (58% → 95.8%). Hardware deployment to Raspberry Pi 5 with balenaCloud fleet management. 
+          Implementing SMS alerting via Twilio. Addressing threshold optimization and cross-person validation. 
+          Documenting everything through 30+ Architecture Decision Records. 
+          Targeting pilot deployment within 60 days.
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── HOW IT WORKS ─── -->
+<section class="section" id="architecture">
+  <div class="container">
+    <div class="section-label">Under the Hood</div>
+    <div class="section-title">How It Works</div>
+
+    <div class="card-grid fade-in">
+      <div class="card">
+        <h3>Skeleton Extraction</h3>
+        <p>
+          MediaPipe Pose extracts 33 body landmarks from each video frame at 14.4 FPS. 
+          Raw video is never stored—only skeleton coordinates pass to the next stage. 
+          This is the privacy guarantee: the system literally cannot reconstruct what you look like.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Physics Features</h3>
+        <p>
+          42 engineered features derived from skeleton data: velocity vectors, center-of-mass trajectory, 
+          joint angle derivatives, torso inclination rate, limb extension ratios, vertical displacement acceleration. 
+          These encode the physics of falling, not the appearance of a person.
+        </p>
+      </div>
+      <div class="card">
+        <h3>9-State Posture Machine</h3>
+        <p>
+          Instead of classifying single frames, the system tracks state transitions across time: 
+          standing, walking, sitting, bending, stumbling, falling, lying, recovering, unknown. 
+          A fall isn't a single frame—it's a trajectory through states. This dramatically reduces false positives.
+        </p>
+      </div>
+      <div class="card">
+        <h3>5-Second Confirmation</h3>
+        <p>
+          After detecting a fall signature, the system waits 5 seconds to confirm the person remains 
+          in a lying state. If they get up, no alert fires. If they remain down, a Twilio SMS alert 
+          is sent to designated caregivers with timestamp and confidence score.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Edge Deployment</h3>
+        <p>
+          Everything runs on a Raspberry Pi 5 (8GB). No cloud. No internet required for core detection. 
+          Internet only needed for SMS alerts. balenaCloud handles fleet management for multi-device deployments. 
+          Per-unit hardware cost: ~$170.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Mixed Training</h3>
+        <p>
+          RandomForest classifier trained on a blend of NTU RGB+D academic dataset (60,000+ action samples) 
+          and personal validation samples recorded in real homes. This mixed approach is what solved the 
+          domain shift from 58% to 95.8% real-world recall.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── TECH STACK ─── -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">Stack</div>
+    <div class="section-title">Technology</div>
+    <div class="tech-pills fade-in" style="margin-top: 16px;">
+      <span class="pill">Python</span>
+      <span class="pill">MediaPipe</span>
+      <span class="pill">scikit-learn (RandomForest)</span>
+      <span class="pill">OpenCV</span>
+      <span class="pill">NumPy</span>
+      <span class="pill">Raspberry Pi 5</span>
+      <span class="pill">balenaCloud</span>
+      <span class="pill">Twilio SMS</span>
+      <span class="pill">NTU RGB+D Dataset</span>
+      <span class="pill">Edge AI</span>
+      <span class="pill">Computer Vision</span>
+      <span class="pill">Pose Estimation</span>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── WHAT'S NEXT ─── -->
+<section class="section" id="next">
+  <div class="container">
+    <div class="section-label">Roadmap</div>
+    <div class="section-title">What's Next</div>
+
+    <div class="card-grid fade-in">
+      <div class="card">
+        <h3>10-Family Pilot</h3>
+        <p>
+          Deploy to 10 families in Neepawa within 60 days. 3-month outcomes study measuring 
+          real fall detection rates, false positive frequency, caregiver response times, 
+          and user satisfaction across diverse home environments.
+        </p>
+      </div>
+      <div class="card">
+        <h3>CI/CD & Testing</h3>
+        <p>
+          Build automated testing pipeline with Docker containerization. 
+          Address identified gaps in MLOps, CI/CD, and comprehensive test infrastructure 
+          before scaling beyond pilot deployment.
+        </p>
+      </div>
+      <div class="card">
+        <h3>Patent & IP</h3>
+        <p>
+          File patent protection for the 9-state posture machine and mixed-training methodology. 
+          Reddit demo was taken down to preserve patentability of novel features 
+          around confirmation-based fall detection.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<hr class="divider">
+
+<!-- ─── TEAM ─── -->
+<section class="section">
+  <div class="container">
+    <div class="section-label">People</div>
+    <div class="section-title">Team</div>
+
+    <div class="card-grid fade-in">
+      <div class="card">
+        <h3>Yash Darji</h3>
+        <p>CEO & Co-Founder. ML engineering, product development, hardware deployment. Leading all technical architecture decisions and pilot planning.</p>
+      </div>
+      <div class="card">
+        <h3>Meet Patel</h3>
+        <p>Co-Founder. Working alongside Yash on EMOTE4D development since June 2024.</p>
+      </div>
+      <div class="card">
+        <h3>Bhavesh Patel</h3>
+        <p>Advisor (10% equity). Strategic guidance, regular advisor meetings, and business development support.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-left">
+        <h3>EMOTE4D</h3>
+        <p>AI-powered fall detection for elderly care. Edge AI, privacy by architecture, real-world validated.</p>
+      </div>
+      <div class="footer-links">
+        <a href="index.html">Portfolio</a>
+        <a href="https://github.com/Yash2378/EMOTE4D" target="_blank">GitHub</a>
+        <a href="mailto:yashdarji2378@gmail.com">Email</a>
+        <a href="multivac.html">The Multivac</a>
+        <a href="alex1.html">ALEX-1</a>
+      </div>
+    </div>
+    <div class="footer-copy">© 2026 Yash Darji · EMOTE4D · Neepawa, Manitoba, Canada</div>
+  </div>
+</footer>
+
+<script>
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => { if (entry.isIntersecting) entry.target.classList.add('visible'); });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+</script>
+
+</body>
+</html>

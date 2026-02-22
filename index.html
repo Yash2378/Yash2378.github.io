@@ -50,7 +50,6 @@
       overflow-x: hidden;
     }
 
-    /* ─── NOISE OVERLAY ─── */
     body::before {
       content: '';
       position: fixed;
@@ -60,23 +59,12 @@
       z-index: 9999;
     }
 
-    ::selection {
-      background: var(--accent);
-      color: var(--bg);
-    }
+    ::selection { background: var(--accent); color: var(--bg); }
 
-    a {
-      color: var(--accent);
-      text-decoration: none;
-      transition: opacity 0.2s;
-    }
+    a { color: var(--accent); text-decoration: none; transition: opacity 0.2s; }
     a:hover { opacity: 0.8; }
 
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 24px;
-    }
+    .container { max-width: var(--max-width); margin: 0 auto; padding: 0 24px; }
 
     /* ─── NAV ─── */
     nav {
@@ -106,11 +94,7 @@
       letter-spacing: -0.02em;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 28px;
-      list-style: none;
-    }
+    .nav-links { display: flex; gap: 28px; list-style: none; }
 
     .nav-links a {
       color: var(--text-secondary);
@@ -174,11 +158,7 @@
       font-weight: 300;
     }
 
-    .hero-links {
-      display: flex;
-      gap: 12px;
-      flex-wrap: wrap;
-    }
+    .hero-links { display: flex; gap: 12px; flex-wrap: wrap; }
 
     .hero-link {
       display: inline-flex;
@@ -205,15 +185,10 @@
       border-color: var(--accent);
       color: var(--bg);
     }
-    .hero-link.primary:hover {
-      background: #ea6c0e;
-      opacity: 1;
-    }
+    .hero-link.primary:hover { background: #ea6c0e; opacity: 1; }
 
     /* ─── SECTION HEADERS ─── */
-    .section {
-      padding: 80px 0;
-    }
+    .section { padding: 80px 0; }
 
     .section-label {
       font-family: var(--mono);
@@ -240,18 +215,10 @@
       font-weight: 300;
     }
 
-    /* ─── DIVIDER ─── */
-    .divider {
-      border: none;
-      border-top: 1px solid var(--border);
-      margin: 0;
-    }
+    .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
 
     /* ─── PROJECT HERO (EMOTE4D) ─── */
-    .project-hero {
-      padding: 80px 0;
-      position: relative;
-    }
+    .project-hero { padding: 80px 0; position: relative; }
 
     .project-hero-inner {
       background: var(--bg-card);
@@ -352,12 +319,7 @@
       letter-spacing: 0.03em;
     }
 
-    .tech-pills {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-top: 24px;
-    }
+    .tech-pills { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
 
     .pill {
       padding: 5px 14px;
@@ -419,10 +381,7 @@
       border-top: 1px solid var(--border);
     }
 
-    .card-stat {
-      display: flex;
-      flex-direction: column;
-    }
+    .card-stat { display: flex; flex-direction: column; }
 
     .card-stat-value {
       font-family: var(--mono);
@@ -446,10 +405,7 @@
       margin-top: 16px;
     }
 
-    .card-link::after {
-      content: '→';
-      transition: transform 0.2s;
-    }
+    .card-link::after { content: '→'; transition: transform 0.2s; }
     .card-link:hover::after { transform: translateX(3px); }
 
     /* ─── RESEARCH INTERESTS ─── */
@@ -467,20 +423,11 @@
       transition: border-color 0.3s;
     }
 
-    .interest-card:hover {
-      border-color: var(--border-light);
-    }
+    .interest-card:hover { border-color: var(--border-light); }
 
-    .interest-icon {
-      font-size: 1.5em;
-      margin-bottom: 12px;
-    }
+    .interest-icon { font-size: 1.5em; margin-bottom: 12px; }
 
-    .interest-card h4 {
-      font-size: 1em;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
+    .interest-card h4 { font-size: 1em; font-weight: 600; margin-bottom: 8px; }
 
     .interest-card p {
       color: var(--text-muted);
@@ -489,17 +436,12 @@
     }
 
     /* ─── TIMELINE ─── */
-    .timeline {
-      margin-top: 40px;
-      position: relative;
-    }
+    .timeline { margin-top: 40px; position: relative; }
 
     .timeline::before {
       content: '';
       position: absolute;
-      left: 0;
-      top: 0;
-      bottom: 0;
+      left: 0; top: 0; bottom: 0;
       width: 1px;
       background: var(--border);
     }
@@ -515,10 +457,8 @@
     .timeline-item::before {
       content: '';
       position: absolute;
-      left: -4px;
-      top: 6px;
-      width: 9px;
-      height: 9px;
+      left: -4px; top: 6px;
+      width: 9px; height: 9px;
       background: var(--bg);
       border: 2px solid var(--border-light);
       border-radius: 50%;
@@ -538,11 +478,7 @@
       margin-bottom: 4px;
     }
 
-    .timeline-role {
-      font-weight: 600;
-      font-size: 1.1em;
-      margin-bottom: 2px;
-    }
+    .timeline-role { font-weight: 600; font-size: 1.1em; margin-bottom: 2px; }
 
     .timeline-company {
       color: var(--text-secondary);
@@ -578,22 +514,14 @@
       gap: 20px;
     }
 
-    .validation-item {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
+    .validation-item { display: flex; gap: 12px; align-items: flex-start; }
 
     .validation-check {
-      width: 20px;
-      height: 20px;
-      min-width: 20px;
+      width: 20px; height: 20px; min-width: 20px;
       background: var(--green-soft);
       color: var(--green);
       border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      display: flex; align-items: center; justify-content: center;
       font-size: 0.7em;
       margin-top: 2px;
     }
@@ -604,8 +532,30 @@
       line-height: 1.5;
     }
 
-    .validation-text strong {
-      color: var(--text);
+    .validation-text strong { color: var(--text); }
+
+    /* ─── ADR HIGHLIGHT ─── */
+    .adr-highlight {
+      background: var(--bg-elevated);
+      border-left: 3px solid var(--accent);
+      padding: 20px 24px;
+      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+      margin: 20px 0;
+    }
+
+    .adr-highlight .adr-label {
+      font-family: var(--mono);
+      font-size: 0.72em;
+      color: var(--accent);
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      margin-bottom: 6px;
+    }
+
+    .adr-highlight p {
+      color: var(--text-secondary);
+      font-size: 0.9em;
+      line-height: 1.6;
     }
 
     /* ─── FOOTER ─── */
@@ -636,11 +586,7 @@
       line-height: 1.6;
     }
 
-    .footer-links {
-      display: flex;
-      gap: 24px;
-      flex-wrap: wrap;
-    }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
 
     .footer-links a {
       color: var(--text-secondary);
@@ -660,30 +606,6 @@
       font-size: 0.8em;
     }
 
-    /* ─── ADR HIGHLIGHT ─── */
-    .adr-highlight {
-      background: var(--bg-elevated);
-      border-left: 3px solid var(--accent);
-      padding: 20px 24px;
-      border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-      margin: 20px 0;
-    }
-
-    .adr-highlight .adr-label {
-      font-family: var(--mono);
-      font-size: 0.72em;
-      color: var(--accent);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 6px;
-    }
-
-    .adr-highlight p {
-      color: var(--text-secondary);
-      font-size: 0.9em;
-      line-height: 1.6;
-    }
-
     /* ─── ANIMATE ON SCROLL ─── */
     .fade-in {
       opacity: 0;
@@ -691,10 +613,7 @@
       transition: opacity 0.6s ease, transform 0.6s ease;
     }
 
-    .fade-in.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
+    .fade-in.visible { opacity: 1; transform: translateY(0); }
 
     /* ─── RESPONSIVE ─── */
     @media (max-width: 768px) {
@@ -822,6 +741,8 @@
         <span class="pill">Computer Vision</span>
       </div>
 
+      <a href="emote4d.html" class="card-link" style="margin-top: 24px;">Full Project Details</a>
+      <span style="margin: 0 12px; color: var(--text-muted);">·</span>
       <a href="https://github.com/Yash2378/EMOTE4D" class="card-link" style="margin-top: 24px;" target="_blank">View on GitHub</a>
     </div>
   </div>
@@ -873,6 +794,8 @@
           <span class="pill">Substack</span>
         </div>
 
+        <a href="multivac.html" class="card-link" target="_self">Full Project Details</a>
+        <span style="margin: 0 8px; color: var(--text-muted);">·</span>
         <a href="https://themultivac.substack.com" class="card-link" target="_blank">Read on Substack</a>
       </div>
 
@@ -916,6 +839,8 @@
           <span class="pill">Zigbee</span>
         </div>
 
+        <a href="alex1.html" class="card-link" target="_self">Full Project Details</a>
+        <span style="margin: 0 8px; color: var(--text-muted);">·</span>
         <a href="https://github.com/Yash2378/ALEX-1" class="card-link" target="_blank">View on GitHub</a>
       </div>
     </div>
@@ -1017,7 +942,7 @@
 
     <div class="timeline fade-in">
       <div class="timeline-item active">
-        <div class="timeline-date">MAR 2024 – PRESENT</div>
+        <div class="timeline-date">JUN 2024 – PRESENT</div>
         <div class="timeline-role">CEO & Co-Founder</div>
         <div class="timeline-company">EMOTE4D · Neepawa, Manitoba</div>
         <div class="timeline-desc">
@@ -1027,7 +952,7 @@
       </div>
 
       <div class="timeline-item active">
-        <div class="timeline-date">JAN 2025 – PRESENT</div>
+        <div class="timeline-date">DEC 2025 – PRESENT</div>
         <div class="timeline-role">Founder</div>
         <div class="timeline-company">The Multivac · AI Model Evaluation</div>
         <div class="timeline-desc">
@@ -1091,20 +1016,15 @@
 <script>
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('visible');
-      }
+      if (entry.isIntersecting) entry.target.classList.add('visible');
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
 
-  // Smooth nav background
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
-    nav.style.borderBottomColor = window.scrollY > 20 
-      ? 'var(--border)' 
-      : 'transparent';
+    nav.style.borderBottomColor = window.scrollY > 20 ? 'var(--border)' : 'transparent';
   });
 </script>
 
