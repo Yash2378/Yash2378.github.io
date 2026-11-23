@@ -53,6 +53,7 @@ h3 { font-size: 1.1rem; line-height: 1.3; margin: 1.5rem 0 0.35rem; }
 p { margin: 0 0 0.6rem; }
 .niche { font-size: 1.2rem; line-height: 1.45; margin-bottom: 0.25rem; }
 .meta, .status { color: var(--muted); }
+.when { color: var(--muted); font-size: 0.9rem; font-weight: 400; margin-left: 0.4rem; white-space: nowrap; }
 a { color: var(--link); text-underline-offset: 2px; overflow-wrap: anywhere; }
 a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
 ul { list-style: none; margin: 1.25rem 0 0; padding: 0; }
@@ -93,14 +94,14 @@ footer {
 </article>
 
 <article>
-<h3>Blind peer matrix</h3>
+<h3>Blind peer matrix <span class="when">February to April 2026</span></h3>
 <p>Pools of 8 to 10 language models answered the same question and then scored each other's answers with model names withheld: 286 evaluations and 22,252 usable scored judgments. My own audit on 16 August 2026 found that 178 of the 500 code answers end inside an unclosed code block, and that 291 of the judgments counted as usable gave a positive score to an answer that was stored empty.</p>
 <p class="status">Completed project. Not being pursued for publication.</p>
 <p>Code and data: <a href="https://github.com/themultivac/multivac-evaluation">github.com/themultivac/multivac-evaluation</a></p>
 </article>
 
 <article>
-<h3>CODE-031</h3>
+<h3>CODE-031 <span class="when">June 2026</span></h3>
 <p>Anecdote, not a result: on one coding question, two valid LLM judgments both gave an answer 10.0, and when its fix was run it oversold stock in 25 of 25 concurrency trials, while the two lower ranked fixes oversold in none.</p>
 </article>
 
