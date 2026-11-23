@@ -54,6 +54,6 @@ These are already public in the repository.
 
 The files behind this section are not public.
 
-17. Judge count. A public README at https://github.com/themultivac/themultivac states this case as every peer judge giving a perfect score, with no count. The recorded count is 2 valid judgments. A third recorded judgment is the model scoring itself and is excluded.
+17. Judge count. Until 23 November 2026 a public README at https://github.com/themultivac/themultivac stated this case as every peer judge giving a perfect score, with no count. The recorded count is 2 valid judgments. A third recorded judgment is the model scoring itself and is excluded. The README now gives the count.
 
-18. Benchmark location. The same README says the repository multivac-evaluation includes the execution graded coding benchmark. As of commit 748ad2f that repository holds no coding question numbered above CODE-030, and CODE-031 is not in it.
+18. Benchmark location. Until 23 November 2026 the same README said the repository multivac-evaluation includes the execution graded coding benchmark. As of commit 748ad2f that repository holds no coding question numbered above CODE-030, and CODE-031 is not in it. The sentence was removed.
