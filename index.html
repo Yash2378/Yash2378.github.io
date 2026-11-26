@@ -54,6 +54,10 @@ p { margin: 0 0 0.6rem; }
 .niche { font-size: 1.2rem; line-height: 1.45; margin-bottom: 0.25rem; }
 .meta, .status { color: var(--muted); }
 .focus { margin-top: 1rem; }
+.id { display: flex; align-items: flex-start; justify-content: space-between; gap: 1.25rem; }
+.who { min-width: 0; }
+.who p:last-child { margin-bottom: 0; }
+.photo { flex: none; display: block; width: 7rem; height: 7rem; margin-top: 0.5rem; border-radius: 8px; background: var(--rule); }
 .when { color: var(--muted); font-size: 0.9rem; font-weight: 400; margin-left: 0.4rem; white-space: nowrap; }
 a { color: var(--link); text-underline-offset: 2px; overflow-wrap: anywhere; }
 a:focus-visible { outline: 2px solid var(--link); outline-offset: 2px; }
@@ -70,6 +74,8 @@ footer {
   body { font-size: 16px; }
   .wrap { padding: 2rem 1rem 3rem; }
   h1 { font-size: 1.7rem; }
+  .id { flex-direction: column-reverse; gap: 1rem; }
+  .photo { width: 6rem; height: 6rem; margin-top: 0; }
 }
 </style>
 </head>
@@ -77,9 +83,14 @@ footer {
 <div class="wrap">
 
 <header>
+<div class="id">
+<div class="who">
 <h1>Yash Darji</h1>
 <p class="niche">I measure when AI graders fail.</p>
 <p class="meta">Independent researcher.</p>
+</div>
+<img class="photo" src="yash-darji.jpg" width="112" height="112" alt="Photo of Yash Darji.">
+</div>
 <p class="focus">Current focus: how LLM judges rank partially correct code fixes. Why it matters: a grader's score can become the reward in reinforcement learning, and can decide what a self improving loop keeps.</p>
 </header>
 
@@ -104,7 +115,7 @@ footer {
 
 <article>
 <h3>CODE-031 <span class="when">June 2026</span></h3>
-<p>Anecdote, not a result: on one coding question, two valid LLM judgments both gave an answer 10.0, and when its fix was run it oversold stock in 25 of 25 concurrency trials, while the two lower ranked fixes oversold in none.</p>
+<p>Anecdote, not a result. One coding question asked for a fix to a service that confirmed more orders than it had stock for when requests arrived together. Two valid LLM judgments both gave one answer 10.0. Its fix was run with 3 units in stock and 20 requests at once. More than 3 got through in 25 of 25 trials. With the fixes in the two lower ranked answers, that happened in none.</p>
 </article>
 
 </section>
